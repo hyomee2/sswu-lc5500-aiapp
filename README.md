@@ -2,7 +2,7 @@
 <p align="center">
 <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MDRfNjAg%2FMDAxNjUxNjMzNjQxMDE3.IG2--1anLuh1xZe5lCss4u0iPkahtezjr7bxBT9LF2Qg.Id-GYjI85R1HaDadoLAdx3QdjTPq7UwdmDAEWbQQjq4g.JPEG.catublog%2F6.jpg&type=sc960_832" width="400"/>
 <br>
- <span style="font-size: 3px;"><em>프로젝트 구조도</em></span>
+ <em>예시 이미지</em>
 </p>
 
 ## 📌 프로젝트 목표
