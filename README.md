@@ -5,7 +5,7 @@
 
 ## 🌟 프로젝트 개요 (Project Overview)
 <p align="center">
-<img src="https://img.etnews.com/photonews/2110/1468460_20211029123811_343_0001.jpg" width="400"/>
+<img src="https://img.etnews.com/photonews/2110/1468460_20211029123811_343_0001.jpg" width="500"/>
 </p>
 
 <br>
