@@ -4,6 +4,9 @@
 </p>
 
 ## 🌟 프로젝트 개요 (Project Overview)
+<p align="center">
+<img src="[https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MDRfNjAg%2FMDAxNjUxNjMzNjQxMDE3.IG2--1anLuh1xZe5lCss4u0iPkahtezjr7bxBT9LF2Qg.Id-GYjI85R1HaDadoLAdx3QdjTPq7UwdmDAEWbQQjq4g.JPEG.catublog%2F6.jpg&type=sc960_832](https://img.etnews.com/photonews/2110/1468460_20211029123811_343_0001.jpg)" width="400"/>
+</p>
 
 <br>
 
