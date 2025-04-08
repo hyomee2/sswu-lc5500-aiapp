@@ -3,6 +3,10 @@
 <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MDRfNjAg%2FMDAxNjUxNjMzNjQxMDE3.IG2--1anLuh1xZe5lCss4u0iPkahtezjr7bxBT9LF2Qg.Id-GYjI85R1HaDadoLAdx3QdjTPq7UwdmDAEWbQQjq4g.JPEG.catublog%2F6.jpg&type=sc960_832" width="400"/>
 </p>
 
+## 🌟 프로젝트 개요 (Project Overview)
+
+<br>
+
 ## 📌 프로젝트 목표
  본 프로젝트는 고령자의 사투리, 느린 발화, 부정확한 발음 등으로 인해 음성 인식 정확도가 저하되는 문제를 해결하는 것을 목표로 합니다. 
 
