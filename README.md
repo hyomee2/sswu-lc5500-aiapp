@@ -1,4 +1,9 @@
-# 🗣️ 고령자 친화형 음성 인식 시스템 (HeardU)
+# 🗣️ HeardU
+'당신의 소리를 듣습니다'
+
+>아이든, 할머니든, 할아버지든 모두의 말을 찰떡같이 알아듣는
+>
+---
 <p align="center">
 <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MDRfNjAg%2FMDAxNjUxNjMzNjQxMDE3.IG2--1anLuh1xZe5lCss4u0iPkahtezjr7bxBT9LF2Qg.Id-GYjI85R1HaDadoLAdx3QdjTPq7UwdmDAEWbQQjq4g.JPEG.catublog%2F6.jpg&type=sc960_832" width="400"/>
 </p>
@@ -52,10 +57,16 @@
 
 [5] 챗봇 API 호출
 
-### 3. 기술 및 모델 구성
-🎙️ 음성 인식(STT)
-WhisperEdge 기반의 경량화된 STT 모델 사용 예정
-고령자 특유의 느린 발화에도 적응 가능
+### 3. STT모델 -> Whisper 사용
+## 📒STT 모델로 Whisper를 사용하는 이유
+
+1. 설정 편리
+→ HuggingFace처럼 간단하게 pip install 후 load_model() 한 줄로 바로 사용 가능
+2. 다양한 억양과 발음에 강함
+→ Whisper는 OpenAI가 다국어/다억양 데이터를 기반으로 학습 → 사투리, 느린 발화에도 상대적으로 강인
+3. 무료 GPU 사용의 한계
+→ tiny나 base 모델은 Colab 무료 GPU에서 충분히 돌아감 (속도/정확도 균형 O)
+4. 타 STT 모델의 경우 한글 미지원/ 한글을 지원하는 Clova의 경우엔 유료로 진행해야 함
 
 **텍스트 정제 (사투리 → 표준어)**
 입력: 사투리 텍스트
@@ -75,12 +86,15 @@ Transformer 기반 Sequence-to-Sequence 모델
 정답(Label): 표준어 텍스트
 일부 데이터는 수작업으로 정답 페어 구성 예정
 
-### 5. 향후 계획
- -음성 데이터를 바탕으로 노인 발화에 최적화 된 모델 구축
- 
- -챗봇 연동 테스트
- 
- -고령자 인식 실험 및 성능 측정
+### 5. 향후 계획(0417 update)
+1. 폴더 : /content/HeardU
+2. 꼭 GPU사용! 
+→ `import torch 
+    torch.cuda.is_available()` 
+3. Whisper STT 구현+STT 기본적인 개념 학습
+4. Whisper 실습(wav파일) 
+5. 샘플링 개념 학습+Whisper 구조 학습
+6. 실습 코드를 여러번 접하며 HeardU의 학습 코드를 완성하기
 
  <br>
 
@@ -88,8 +102,8 @@ Transformer 기반 Sequence-to-Sequence 모델
 | 주차   | 날짜         | 내용                                         | 기여율 | 회의록 | 
 |--------|------------|----------------------------------------|--------|--------|
 | 6주차  | 2025/04/07 | 프로젝트 주제 조사 및 선정  | 권형미: 33% 박지인: 33% 윤서희: 33%    | https://www.notion.so/AI-1ce0bb18b32f80e4b47bc257af00cca9 |
-| 7주차  | 2025/04/14 | 프로젝트 설계 및 상황 공유  |    | |
-| 8주차  | 2025/04/21 | 프로젝트 설계 및 상황 공유 |    | |
+| 7주차  | 2025/04/14 | 프로젝트 설계 구체화  환경 준비  |  권형미: 33% 박지인: 33% 윤서희: 33%   | https://www.notion.so/AI-1ce0bb18b32f80e4b47bc257af00cca9 |
+| 8주차  | 2025/04/21 | 모델 학습 |    | |
 | 9주차  | 2025/04/28 | 중간 발표 준비  |    | |
 | 10주차 | 2025/05/05 | 프로젝트 구현 및 상황 공유  |    | |
 | 11주차 | 2025/05/12 | 프로젝트 구현 및 상황 공유                          |    | |
