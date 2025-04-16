@@ -58,7 +58,7 @@
 [5] 챗봇 API 호출
 
 ### 3. STT모델 -> Whisper 사용
-## 📒STT 모델로 Whisper를 사용하는 이유
+### 📒STT 모델로 Whisper를 사용하는 이유
 
 1. 설정 편리
 → HuggingFace처럼 간단하게 pip install 후 load_model() 한 줄로 바로 사용 가능
@@ -68,16 +68,6 @@
 → tiny나 base 모델은 Colab 무료 GPU에서 충분히 돌아감 (속도/정확도 균형 O)
 4. 타 STT 모델의 경우 한글 미지원/ 한글을 지원하는 Clova의 경우엔 유료로 진행해야 함
 
-**텍스트 정제 (사투리 → 표준어)**
-입력: 사투리 텍스트
-출력: 표준어로 변환된 문장
-모델 형태:
-Transformer 기반 Sequence-to-Sequence 모델
-또는 Rule-based 변환기를 병렬적으로 활용
-
-🤖 챗봇 연동
-- 변환된 표준어 문장을 챗봇 API에 전달하여 반응 테스트
-- 실제 사용자의 이해도 평가 및 시연용 응용 가능
 
 ### 4. 학습 방식
 - 데이터에 Label이 주어진 점을 바탕으로 Supervised Learning 사용
