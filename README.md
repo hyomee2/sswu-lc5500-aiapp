@@ -89,14 +89,80 @@
  <br>
 
 ## 📅 주차별 활동 계획
-| 주차   | 날짜         | 내용                                         | 기여율 | 회의록 | 
-|--------|------------|----------------------------------------|--------|--------|
-| 7주차  | 2025/04/07 | 프로젝트 주제 선정 및 모델 선택  |  권형미: 33% 박지인: 33% 윤서희: 33%   | https://www.notion.so/1e6b4effbb3080c6a1aec08af7a5d48a?v=1e6b4effbb3080cc8a9a000c3947c4e6&p=1e6b4effbb308053b820caa94f76b168&pm=s |
-| 8주차  | 2025/04/21 | 모델 구체화 및 모델 학습 | 권형미: 33% 박지인: 33% 윤서희: 33% | https://www.notion.so/1e6b4effbb3080c6a1aec08af7a5d48a?v=1e6b4effbb3080cc8a9a000c3947c4e6&p=1e6b4effbb30809995b5e243b7491956&pm=s |
-| 9주차  | 2025/04/26 | 중간 발표 준비  | 권형미: 40% 박지인: 30% 윤서희: 30% | https://www.notion.so/1e6b4effbb3080c6a1aec08af7a5d48a?v=1e6b4effbb3080cc8a9a000c3947c4e6&p=1e6b4effbb3080829809e22719039945&pm=s |
-| 10주차 | 2025/05/05 | 프로젝트 구현 및 상황 공유  |    | |
-| 11주차 | 2025/05/12 | 프로젝트 구현 및 상황 공유                          |    | |
-| 12주차 | 2025/05/19 | 프로젝트 구현 및 상황 공유                          |    | |
-| 13주차 | 2025/05/26 | 프로젝트 구현 및 상황 공유                         |    | |
-| 14주차 | 2025/06/02 | 프로젝트 최종 점검 (데모)                          |    | |
-| 15주차 | 2025/06/09 | 최종 발표 준비                        |    | |
+<table>
+  <thead>
+    <tr>
+      <th style="width: 80px;">주차</th>
+      <th style="width: 120px;">날짜</th>
+      <th style="width: 300px;">내용</th>
+      <th style="width: 200px;">기여율</th>
+      <th style="width: 300px;">회의록</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>7주차</td>
+      <td>2025/04/07</td>
+      <td>프로젝트 주제 선정 및 모델 선택</td>
+      <td>권형미: 33%<br>박지인: 33%<br>윤서희: 33%</td>
+      <td><a href="https://www.notion.so/1e6b4effbb3080c6a1aec08af7a5d48a?v=1e6b4effbb3080cc8a9a000c3947c4e6&p=1e6b4effbb308053b820caa94f76b168&pm=s">바로가기</a></td>
+    </tr>
+    <tr>
+      <td>8주차</td>
+      <td>2025/04/21</td>
+      <td>모델 구체화 및 모델 학습</td>
+      <td>권형미: 33%<br>박지인: 33%<br>윤서희: 33%</td>
+      <td><a href="https://www.notion.so/1e6b4effbb3080c6a1aec08af7a5d48a?v=1e6b4effbb3080cc8a9a000c3947c4e6&p=1e6b4effbb30809995b5e243b7491956&pm=s">바로가기</a></td>
+    </tr>
+    <tr>
+      <td>9주차</td>
+      <td>2025/04/26</td>
+      <td>중간 발표 준비</td>
+      <td>권형미: 40%<br>박지인: 30%<br>윤서희: 30%</td>
+      <td><a href="https://www.notion.so/1e6b4effbb3080c6a1aec08af7a5d48a?v=1e6b4effbb3080cc8a9a000c3947c4e6&p=1e6b4effbb3080829809e22719039945&pm=s">바로가기</a></td>
+    </tr>
+    <tr>
+      <td>10주차</td>
+      <td>2025/05/05</td>
+      <td>프로젝트 구현 및 상황 공유</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>11주차</td>
+      <td>2025/05/12</td>
+      <td>프로젝트 구현 및 상황 공유</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>12주차</td>
+      <td>2025/05/19</td>
+      <td>프로젝트 구현 및 상황 공유</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>13주차</td>
+      <td>2025/05/26</td>
+      <td>프로젝트 구현 및 상황 공유</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>14주차</td>
+      <td>2025/06/02</td>
+      <td>프로젝트 최종 점검 (데모)</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>15주차</td>
+      <td>2025/06/09</td>
+      <td>최종 발표 준비</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
