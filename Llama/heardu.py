@@ -9,18 +9,16 @@ Original file is located at
 
 !pip install numpy==1.24.4
 
-# 🌟 Whisper Context-aware Fine-tuning Colab Template (Validation 포함)
 
-# 0. Google Drive 마운트
 from google.colab import drive
 drive.mount('/content/drive')
 
-# 1. 필수 라이브러리 설치
+
 !pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
 !pip install git+https://github.com/openai/whisper.git
 !pip install datasets librosa accelerate transformers scikit-learn
 
-# 2. 라이브러리 임포트
+
 import torch
 import whisper
 import torchaudio
@@ -31,7 +29,7 @@ from tqdm import tqdm
 import os
 from sklearn.model_selection import train_test_split
 
-# 3. 데이터세트 클래스 정의
+
 class ContextDataset(Dataset):
     def __init__(self, file_list):
         self.data = file_list
@@ -51,15 +49,15 @@ class ContextDataset(Dataset):
 
         return audio, full_label
 
-# 4. 모델 로드
+
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model = whisper.load_model("tiny").to(device)
 
-# 5. Optimizer, Loss 정의
+
 optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
 loss_fn = torch.nn.CrossEntropyLoss()
 
-# 6. 데이터 준비 및 분할
+
 '''
 #파일 개수 190개
 # wav 파일 폴더 경로
@@ -83,9 +81,9 @@ for filename in os.listdir(wav_folder):
         audio_path = os.path.join(wav_folder, filename)
         json_path = os.path.join(json_folder, base_name + ".json")
 
-         # json 파일 존재 여부 확인
+         # json 파일 존재
         if not os.path.exists(json_path):
-            print(f"경고: {json_path} 파일이 존재하지 않습니다.")
+            print("매치되는 json파일X")
             continue
 
         with open(json_path, 'r', encoding='utf-8') as f:
@@ -101,16 +99,16 @@ for filename in os.listdir(wav_folder):
             print(f"{i} : {filename} 추가 완료")
 
 if len(file_list) < 3:
-    raise ValueError("데이터셋이 너무 적습니다. 최소 3개 이상의 .wav/.json 쌍이 필요합니다.")
+    raise ValueError("데이터셋 없슈슈")
 
-# Train/Valid/Test 데이터 분할
+
 train_data, temp_data = train_test_split(file_list, test_size=0.3, random_state=42)
 valid_data, test_data = train_test_split(temp_data, test_size=0.5, random_state=42)
 
 train_loader = DataLoader(ContextDataset(train_data), batch_size=1, shuffle=True)
 valid_loader = DataLoader(ContextDataset(valid_data), batch_size=1, shuffle=False)
 
-# 7. 학습 루프
+####학습
 num_epochs = 1
 model.train()
 tokenizer = whisper.tokenizer.get_tokenizer(multilingual=model.is_multilingual)
@@ -139,12 +137,12 @@ for epoch in range(num_epochs):
         optimizer.step()
 
         train_loss_epoch += loss.item()
-        loop.set_description(f"Epoch {epoch+1}")
+        loop.set_description(f"Epoch : {epoch+1}")
         loop.set_postfix(loss=loss.item())
         losslst.append(loss.item())
         print(loss.item(),"\n")
 
-    # 검증 루프
+    # 검증 
     model.eval()
     val_losses = []
     with torch.no_grad():
@@ -159,13 +157,11 @@ for epoch in range(num_epochs):
             val_losses.append(val_loss.item())
 
     val_loss_mean = sum(val_losses)/len(val_losses)
-    print(f"\n✅ Epoch {epoch+1} 완료! Validation Loss: {val_loss_mean:.4f}\n")
+    print(f"\n Epoch : {epoch+1} | Validation Loss: {val_loss_mean:.4f}\n")
     model.train()
 
-# 8. 모델 저장
+##저장장
 save_path = "/content/drive/MyDrive/인지응팀플/0522_validation.pt"
 os.makedirs(os.path.dirname(save_path), exist_ok=True)
 torch.save(model.state_dict(), save_path)
 print(f"\n모델 저장 {save_path}")
-
-!jupyter nbconvert --to script "/content/drive/MyDrive/HeardUGIT/sswu-lc5500-aiapp/HeardU"
