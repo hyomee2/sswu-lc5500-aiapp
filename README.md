@@ -144,10 +144,10 @@
     </tr>
     <tr>
       <td>13주차</td>
-      <td>2025/05/26</td>
+      <td>2025/05/28</td>
       <td>프로젝트 구현 및 상황 공유</td>
-      <td></td>
-      <td></td>
+      <td>권형미: 30%<br>박지인: 40%<br>윤서희: 30%</td>
+      <td><a href="https://www.notion.so/1e6b4effbb3080c6a1aec08af7a5d48a?v=1e6b4effbb3080cc8a9a000c3947c4e6&p=201b4effbb30808795c6e766c8b2006d&pm=s">바로가기</td>
     </tr>
     <tr>
       <td>14주차</td>
