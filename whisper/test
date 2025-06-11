@@ -1,1 +1,193 @@
-{"nbformat":4,"nbformat_minor":0,"metadata":{"colab":{"provenance":[],"authorship_tag":"ABX9TyNxI3BLtxJ46O///14gwvLs"},"kernelspec":{"name":"python3","display_name":"Python 3"},"language_info":{"name":"python"}},"cells":[{"cell_type":"code","execution_count":1,"metadata":{"colab":{"base_uri":"https://localhost:8080/","height":471},"id":"qIgoeQC-4NS-","executionInfo":{"status":"ok","timestamp":1748450922852,"user_tz":-540,"elapsed":13041,"user":{"displayName":"서희","userId":"09896160831495652044"}},"outputId":"df5bd0df-142f-45d7-80fa-278121574a45"},"outputs":[{"output_type":"stream","name":"stdout","text":["Collecting numpy==1.24.4\n","  Downloading numpy-1.24.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)\n","Downloading numpy-1.24.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)\n","\u001b[2K   \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m17.3/17.3 MB\u001b[0m \u001b[31m45.0 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n","\u001b[?25hInstalling collected packages: numpy\n","  Attempting uninstall: numpy\n","    Found existing installation: numpy 2.0.2\n","    Uninstalling numpy-2.0.2:\n","      Successfully uninstalled numpy-2.0.2\n","\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n","jaxlib 0.5.1 requires numpy>=1.25, but you have numpy 1.24.4 which is incompatible.\n","pymc 5.22.0 requires numpy>=1.25.0, but you have numpy 1.24.4 which is incompatible.\n","blosc2 3.3.3 requires numpy>=1.26, but you have numpy 1.24.4 which is incompatible.\n","tensorflow 2.18.0 requires numpy<2.1.0,>=1.26.0, but you have numpy 1.24.4 which is incompatible.\n","thinc 8.3.6 requires numpy<3.0.0,>=2.0.0, but you have numpy 1.24.4 which is incompatible.\n","treescope 0.1.9 requires numpy>=1.25.2, but you have numpy 1.24.4 which is incompatible.\n","jax 0.5.2 requires numpy>=1.25, but you have numpy 1.24.4 which is incompatible.\u001b[0m\u001b[31m\n","\u001b[0mSuccessfully installed numpy-1.24.4\n"]},{"output_type":"display_data","data":{"application/vnd.colab-display-data+json":{"pip_warning":{"packages":["numpy"]},"id":"a0f49405dd534fd9852b6ce5de3de997"}},"metadata":{}}],"source":["####설치 후 세션 재시작 눌러야 함 'RESTART SESSION'####\n","!pip install numpy==1.24.4"]},{"cell_type":"code","source":["from google.colab import drive\n","drive.mount('/content/drive')"],"metadata":{"colab":{"base_uri":"https://localhost:8080/"},"id":"Q-3Q9a6B5ZR-","executionInfo":{"status":"ok","timestamp":1748454283227,"user_tz":-540,"elapsed":15014,"user":{"displayName":"서희","userId":"09896160831495652044"}},"outputId":"81a9afd8-491f-42c6-e5da-51543e4eca39"},"execution_count":2,"outputs":[{"output_type":"stream","name":"stdout","text":["Mounted at /content/drive\n"]}]},{"cell_type":"code","source":["########설치########\n","!pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118\n","!pip install git+https://github.com/openai/whisper.git\n","\n","import torch\n","import whisper\n","import torchaudio\n","import os\n"],"metadata":{"colab":{"base_uri":"https://localhost:8080/"},"id":"-5eEysb_4TQD","executionInfo":{"status":"ok","timestamp":1748454497656,"user_tz":-540,"elapsed":210514,"user":{"displayName":"서희","userId":"09896160831495652044"}},"outputId":"02e33c46-c8f2-46b7-c15d-ea659e9824a9"},"execution_count":3,"outputs":[{"output_type":"stream","name":"stdout","text":["Looking in indexes: https://download.pytorch.org/whl/cu118\n","Collecting torch==2.0.1\n","  Downloading https://download.pytorch.org/whl/cu118/torch-2.0.1%2Bcu118-cp311-cp311-linux_x86_64.whl (2267.3 MB)\n","\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m2.3/2.3 GB\u001b[0m \u001b[31m418.4 kB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n","\u001b[?25hCollecting torchvision==0.15.2\n","  Downloading https://download.pytorch.org/whl/cu118/torchvision-0.15.2%2Bcu118-cp311-cp311-linux_x86_64.whl (6.1 MB)\n","\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m6.1/6.1 MB\u001b[0m \u001b[31m78.8 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n","\u001b[?25hCollecting torchaudio==2.0.2\n","  Downloading https://download.pytorch.org/whl/cu118/torchaudio-2.0.2%2Bcu118-cp311-cp311-linux_x86_64.whl (4.4 MB)\n","\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m4.4/4.4 MB\u001b[0m \u001b[31m80.7 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n","\u001b[?25hRequirement already satisfied: filelock in /usr/local/lib/python3.11/dist-packages (from torch==2.0.1) (3.18.0)\n","Requirement already satisfied: typing-extensions in /usr/local/lib/python3.11/dist-packages (from torch==2.0.1) (4.13.2)\n","Requirement already satisfied: sympy in /usr/local/lib/python3.11/dist-packages (from torch==2.0.1) (1.13.1)\n","Requirement already satisfied: networkx in /usr/local/lib/python3.11/dist-packages (from torch==2.0.1) (3.4.2)\n","Requirement already satisfied: jinja2 in /usr/local/lib/python3.11/dist-packages (from torch==2.0.1) (3.1.6)\n","Collecting triton==2.0.0 (from torch==2.0.1)\n","  Downloading https://download.pytorch.org/whl/triton-2.0.0-1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (63.3 MB)\n","\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m63.3/63.3 MB\u001b[0m \u001b[31m11.6 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n","\u001b[?25hRequirement already satisfied: numpy in /usr/local/lib/python3.11/dist-packages (from torchvision==0.15.2) (1.24.4)\n","Requirement already satisfied: requests in /usr/local/lib/python3.11/dist-packages (from torchvision==0.15.2) (2.32.3)\n","Requirement already satisfied: pillow!=8.3.*,>=5.3.0 in /usr/local/lib/python3.11/dist-packages (from torchvision==0.15.2) (11.2.1)\n","Requirement already satisfied: cmake in /usr/local/lib/python3.11/dist-packages (from triton==2.0.0->torch==2.0.1) (3.31.6)\n","Collecting lit (from triton==2.0.0->torch==2.0.1)\n","  Downloading https://download.pytorch.org/whl/lit-15.0.7.tar.gz (132 kB)\n","\u001b[2K     \u001b[90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\u001b[0m \u001b[32m132.3/132.3 kB\u001b[0m \u001b[31m10.2 MB/s\u001b[0m eta \u001b[36m0:00:00\u001b[0m\n","\u001b[?25h  Preparing metadata (setup.py) ... \u001b[?25l\u001b[?25hdone\n","Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.11/dist-packages (from jinja2->torch==2.0.1) (3.0.2)\n","Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.11/dist-packages (from requests->torchvision==0.15.2) (3.4.2)\n","Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.11/dist-packages (from requests->torchvision==0.15.2) (3.10)\n","Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.11/dist-packages (from requests->torchvision==0.15.2) (2.4.0)\n","Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.11/dist-packages (from requests->torchvision==0.15.2) (2025.4.26)\n","Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.11/dist-packages (from sympy->torch==2.0.1) (1.3.0)\n","Building wheels for collected packages: lit\n","  Building wheel for lit (setup.py) ... \u001b[?25l\u001b[?25hdone\n","  Created wheel for lit: filename=lit-15.0.7-py3-none-any.whl size=89990 sha256=dde2263c6dc0523cda2753a9ff4c9f32576e655655b59fe16fa80c9ec4e973c8\n","  Stored in directory: /root/.cache/pip/wheels/fc/5d/45/34fe9945d5e45e261134e72284395be36c2d4828af38e2b0fe\n","Successfully built lit\n","Installing collected packages: lit, triton, torch, torchvision, torchaudio\n","  Attempting uninstall: triton\n","    Found existing installation: triton 3.2.0\n","    Uninstalling triton-3.2.0:\n","      Successfully uninstalled triton-3.2.0\n","  Attempting uninstall: torch\n","    Found existing installation: torch 2.6.0+cu124\n","    Uninstalling torch-2.6.0+cu124:\n","      Successfully uninstalled torch-2.6.0+cu124\n","  Attempting uninstall: torchvision\n","    Found existing installation: torchvision 0.21.0+cu124\n","    Uninstalling torchvision-0.21.0+cu124:\n","      Successfully uninstalled torchvision-0.21.0+cu124\n","  Attempting uninstall: torchaudio\n","    Found existing installation: torchaudio 2.6.0+cu124\n","    Uninstalling torchaudio-2.6.0+cu124:\n","      Successfully uninstalled torchaudio-2.6.0+cu124\n","Successfully installed lit-15.0.7 torch-2.0.1+cu118 torchaudio-2.0.2+cu118 torchvision-0.15.2+cu118 triton-2.0.0\n","Collecting git+https://github.com/openai/whisper.git\n","  Cloning https://github.com/openai/whisper.git to /tmp/pip-req-build-l3lge9yj\n","  Running command git clone --filter=blob:none --quiet https://github.com/openai/whisper.git /tmp/pip-req-build-l3lge9yj\n","  Resolved https://github.com/openai/whisper.git to commit dd985ac4b90cafeef8712f2998d62c59c3e62d22\n","  Installing build dependencies ... \u001b[?25l\u001b[?25hdone\n","  Getting requirements to build wheel ... \u001b[?25l\u001b[?25hdone\n","  Preparing metadata (pyproject.toml) ... \u001b[?25l\u001b[?25hdone\n","Requirement already satisfied: more-itertools in /usr/local/lib/python3.11/dist-packages (from openai-whisper==20240930) (10.7.0)\n","Requirement already satisfied: numba in /usr/local/lib/python3.11/dist-packages (from openai-whisper==20240930) (0.60.0)\n","Requirement already satisfied: numpy in /usr/local/lib/python3.11/dist-packages (from openai-whisper==20240930) (1.24.4)\n","Requirement already satisfied: tiktoken in /usr/local/lib/python3.11/dist-packages (from openai-whisper==20240930) (0.9.0)\n","Requirement already satisfied: torch in /usr/local/lib/python3.11/dist-packages (from openai-whisper==20240930) (2.0.1+cu118)\n","Requirement already satisfied: tqdm in /usr/local/lib/python3.11/dist-packages (from openai-whisper==20240930) (4.67.1)\n","Requirement already satisfied: triton>=2 in /usr/local/lib/python3.11/dist-packages (from openai-whisper==20240930) (2.0.0)\n","Requirement already satisfied: cmake in /usr/local/lib/python3.11/dist-packages (from triton>=2->openai-whisper==20240930) (3.31.6)\n","Requirement already satisfied: filelock in /usr/local/lib/python3.11/dist-packages (from triton>=2->openai-whisper==20240930) (3.18.0)\n","Requirement already satisfied: lit in /usr/local/lib/python3.11/dist-packages (from triton>=2->openai-whisper==20240930) (15.0.7)\n","Requirement already satisfied: llvmlite<0.44,>=0.43.0dev0 in /usr/local/lib/python3.11/dist-packages (from numba->openai-whisper==20240930) (0.43.0)\n","Requirement already satisfied: regex>=2022.1.18 in /usr/local/lib/python3.11/dist-packages (from tiktoken->openai-whisper==20240930) (2024.11.6)\n","Requirement already satisfied: requests>=2.26.0 in /usr/local/lib/python3.11/dist-packages (from tiktoken->openai-whisper==20240930) (2.32.3)\n","Requirement already satisfied: typing-extensions in /usr/local/lib/python3.11/dist-packages (from torch->openai-whisper==20240930) (4.13.2)\n","Requirement already satisfied: sympy in /usr/local/lib/python3.11/dist-packages (from torch->openai-whisper==20240930) (1.13.1)\n","Requirement already satisfied: networkx in /usr/local/lib/python3.11/dist-packages (from torch->openai-whisper==20240930) (3.4.2)\n","Requirement already satisfied: jinja2 in /usr/local/lib/python3.11/dist-packages (from torch->openai-whisper==20240930) (3.1.6)\n","Requirement already satisfied: charset-normalizer<4,>=2 in /usr/local/lib/python3.11/dist-packages (from requests>=2.26.0->tiktoken->openai-whisper==20240930) (3.4.2)\n","Requirement already satisfied: idna<4,>=2.5 in /usr/local/lib/python3.11/dist-packages (from requests>=2.26.0->tiktoken->openai-whisper==20240930) (3.10)\n","Requirement already satisfied: urllib3<3,>=1.21.1 in /usr/local/lib/python3.11/dist-packages (from requests>=2.26.0->tiktoken->openai-whisper==20240930) (2.4.0)\n","Requirement already satisfied: certifi>=2017.4.17 in /usr/local/lib/python3.11/dist-packages (from requests>=2.26.0->tiktoken->openai-whisper==20240930) (2025.4.26)\n","Requirement already satisfied: MarkupSafe>=2.0 in /usr/local/lib/python3.11/dist-packages (from jinja2->torch->openai-whisper==20240930) (3.0.2)\n","Requirement already satisfied: mpmath<1.4,>=1.1.0 in /usr/local/lib/python3.11/dist-packages (from sympy->torch->openai-whisper==20240930) (1.3.0)\n","Building wheels for collected packages: openai-whisper\n","  Building wheel for openai-whisper (pyproject.toml) ... \u001b[?25l\u001b[?25hdone\n","  Created wheel for openai-whisper: filename=openai_whisper-20240930-py3-none-any.whl size=803707 sha256=5c6bfeb7fd4925352b3e06c1351ebbaa724896c8c1a17cc33c0a870af96f3237\n","  Stored in directory: /tmp/pip-ephem-wheel-cache-i2qdjplf/wheels/1f/1d/98/9583695e6695a6ac0ad42d87511097dce5ba486647dbfecb0e\n","Successfully built openai-whisper\n","Installing collected packages: openai-whisper\n","Successfully installed openai-whisper-20240930\n"]}]},{"cell_type":"code","source":["##모델로드##\n","model_path = \"/content/drive/MyDrive/인지응팀플/0522_validation.pt\"\n","device = \"cuda\" if torch.cuda.is_available() else \"cpu\"\n","\n","model = whisper.load_model(\"tiny\").to(device)\n","\n","try:\n","    model.load_state_dict(torch.load(model_path, map_location=device))\n","    print(\"Fine-tuned Whisper 모델 로드 완료!\")\n","except Exception as e:\n","    print(\"모델 로드 오류:\", e)\n"],"metadata":{"colab":{"base_uri":"https://localhost:8080/"},"id":"7y2aCCuV4VEx","executionInfo":{"status":"ok","timestamp":1748454550047,"user_tz":-540,"elapsed":11514,"user":{"displayName":"서희","userId":"09896160831495652044"}},"outputId":"90368a8c-34ae-4ed6-be3e-ddd5a62cfa7e"},"execution_count":4,"outputs":[{"output_type":"stream","name":"stderr","text":["100%|██████████████████████████████████████| 72.1M/72.1M [00:00<00:00, 127MiB/s]\n"]},{"output_type":"stream","name":"stdout","text":["Fine-tuned Whisper 모델 로드 완료!\n"]}]},{"cell_type":"code","source":["##음성 파일 로드 및 예측 함수 정의##\n","def transcribe_audio(audio_path):\n","    audio, sr = torchaudio.load(audio_path)\n","    if sr != 16000:\n","        resampler = torchaudio.transforms.Resample(sr, 16000)\n","        audio = resampler(audio)\n","\n","    audio = audio.squeeze().to(device)\n","    audio = whisper.pad_or_trim(audio)\n","    mel = whisper.log_mel_spectrogram(audio).to(device)\n","\n","    # Whisper inference\n","    result = model.transcribe(audio_path)\n","    print(f\"🗣️ 음성 인식 결과: {result['text']}\")"],"metadata":{"id":"PPbFxoEc4WWQ","executionInfo":{"status":"ok","timestamp":1748454551192,"user_tz":-540,"elapsed":5,"user":{"displayName":"서희","userId":"09896160831495652044"}}},"execution_count":5,"outputs":[]},{"cell_type":"code","source":["##오디오 파일 경로(1개)##\n","audio_test_path = \"/content/drive/MyDrive/인지응팀플/content/wav_files/노인남여_노인대화07_F_1522434093_60_경상_실내/노인남여_노인대화07_F_1522434093_60_경상_실내_08580.wav\"\n","\n","##출력##\n","transcribe_audio(audio_test_path)"],"metadata":{"colab":{"base_uri":"https://localhost:8080/"},"id":"jAUXBkoN4X1a","executionInfo":{"status":"ok","timestamp":1748454558434,"user_tz":-540,"elapsed":5559,"user":{"displayName":"서희","userId":"09896160831495652044"}},"outputId":"f4cd9ecd-5972-4410-ebfb-0081b3c49e50"},"execution_count":6,"outputs":[{"output_type":"stream","name":"stderr","text":["/usr/local/lib/python3.11/dist-packages/whisper/transcribe.py:132: UserWarning: FP16 is not supported on CPU; using FP32 instead\n","  warnings.warn(\"FP16 is not supported on CPU; using FP32 instead\")\n"]},{"output_type":"stream","name":"stdout","text":["🗣️ 음성 인식 결과:  밥 한끼를 제대로 된 밥 한 줄을 먹을 수 있다고 생각하면서.\n"]}]},{"cell_type":"markdown","source":["# 테스트 결과 #\n","\n","\n","🗣️ 0506.pt(validX) :음성 인식 결과:  여름 내면 또 어떤 관찰가 많았냐 하면은 물료리 아가지고\n","\n","🗣️ 0521_2.pt(valid 추가) :음성 인식 결과:  여름 되냐 또 어떤 반짝아 많았냐 하면 물놀이 하가지고.\n","\n","🗣️0521_3(seed 추가) : 여러분들은 또 어떤 환자가 많느냐 하면은 물놀이 가 가지고\n","\n","🗣️seed절망적인결과.... 음성 인식 결과:  He's in it. Good. That's it. Now that's watch is in it.. He's hobi. What I did for your lies. What? What? What is it? What is out of economy? What's on this is it? What is it? Is there in it. What is good? What is it? Where is really worst? You broke what sorry what… What was nowDoful?laş得 it. What is wronged what? How ever for the says test is gonna out it what is understood you.\n","\n","\"/content/drive/MyDrive/인지응팀플/0507.pt\" :  여름 내면 또 어떤 관찰가 많았냐 하면은 물료리 아가지고\n","\n","🗣️ 절망적인 seed 2차.. // 음성 인식 결과: 화������연연������������상 경연��������화����������상��상������연연 remed상����송����화������연��화 개인����상 inad화����예���������������������� 경�이��������상상����������화��들이��상�������� 있거든요����������������연 국민�������� cheddar연������������셨�인내������������연����연�� outs상������송���� 경say연������������화��������������상������idez������������������예������������들이����연화��������으��송��ARIN씨������화��������������화������상����상����������������화����연 경화화����\n","\n","0522_validation.pt : 🗣️ 음성 인식 결과:  가방기를 제대로 된다 판기를 먹을 수 있다고 생각하면서. [밥 한끼를 제대로 된 밥 한끼를 먹을 수 있다고 생각하면서]\n","\n","0522_validation.pt(10epochs 학습 후) : 🗣️ 음성 인식 결과:  밥 한끼를 제대로 된 밥 한 줄을 먹을 수 있다고 생각하면서.\n"],"metadata":{"id":"bKoAYe9NcYiI"}}]}
+# -*- coding: utf-8 -*-
+"""test.ipynb
+
+Automatically generated by Colab.
+
+Original file is located at
+    https://colab.research.google.com/drive/1Eqp7C83nQK0yjV-q2oc7deFrC5iOh9ps
+"""
+
+####설치 후 세션 재시작 눌러야 함 'RESTART SESSION'####
+!pip install numpy==1.24.4
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+#  패키지 설치
+!pip install jiwer --quiet
+!pip install git+https://github.com/openai/whisper.git --quiet
+
+
+import os, zipfile, json, random, torch, torchaudio
+from torch.utils.data import Dataset, DataLoader
+from sklearn.model_selection import train_test_split
+from jiwer import cer
+import whisper
+
+# 압축 해제 함수
+def unzip(zip_path, extract_to):
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_to)
+
+
+json_zip_path = "/content/drive/MyDrive/인지응팀플/content/json_files/zip/[라벨]1.AI챗봇.zip"
+wav_zip_path  = "/content/drive/MyDrive/인지응팀플/content/wav_files/zip/[원천]1.AI챗봇.zip"
+json_dir = "/content/json_unzip"
+wav_dir = "/content/wav_unzip"
+
+unzip(json_zip_path, json_dir)
+unzip(wav_zip_path,  wav_dir)
+
+# 데이터 준비
+file_list = []
+for root, _, files in os.walk(json_dir):
+    for filename in files:
+        if not filename.endswith(".json"):
+            continue
+        json_path = os.path.join(root, filename)
+        wav_path = json_path.replace(json_dir, wav_dir).replace(".json", ".wav")
+        if not os.path.exists(wav_path):
+            continue
+        with open(json_path, 'r', encoding='utf-8') as f:
+            label = json.load(f)["발화정보"]["stt"]
+        if label.strip() != "":
+            file_list.append((wav_path, label))
+
+
+file_list = random.sample(file_list, min(100, len(file_list)))
+
+# 모델 불러오기
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model = whisper.load_model("base").to(device)
+#model_path = "/content/drive/MyDrive/인지응팀플/graph_4.pt"#small, 40000개
+model_path = "/content/drive/MyDrive/인지응팀플/data5000_epoch15.pt"#base, 5000개
+try:
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    print("모델 로드 완료!")
+except Exception as e:
+    print("모델 로드 오류:", e)
+
+import re
+from jiwer import cer
+
+
+def clean_text(text, repeat_limit=3):
+    # 메타 태그 제거: (NO:), (SP:), (FP:), (SN:)
+    text = re.sub(r"\((NO|SP|SN|FP):[^\)]*\)", "", text)
+    text = re.sub(r"\((NO|SP|SN|FP)\)", "", text)
+
+    # 특수문자 제거: (), ., ?, ! 등
+    text = re.sub(r"[().?!]", "", text)
+
+    # 반복되는 감탄사 제거: ㅋㅋ, ㅎㅎ
+    text = re.sub(r"(ㅋ|ㅎ){2,}", "", text)
+
+    # 의미 없는 문장 반복 제거
+    text = re.sub(r"(이게 뭐지|뭐지\s?){2,}", "", text)
+
+    # 같은 단어 반복 제거: "그게 그게 그게" → "그게"
+    text = re.sub(r"\b(\w+)(\s+\1)+\b", r"\1", text)
+
+    # 의미 없는 단어 반복 tail 제거
+    tokens = text.strip().split()
+    for i in range(len(tokens)):
+        repeat_chunk = tokens[i:i+repeat_limit]
+        if len(repeat_chunk) == repeat_limit and all(t == repeat_chunk[0] for t in repeat_chunk):
+            tokens = tokens[:i]
+            break
+    text = " ".join(tokens)
+
+    # 공백 정리
+    text = re.sub(r"\s{2,}", " ", text).strip()
+
+    return text
+
+def truncate_by_ref_length(hyp: str, ref: str, margin: int = 1) -> str:
+    max_chars = len(ref.strip()) + margin
+    return hyp[:max_chars]
+
+# CER 평가
+refs = []
+hyps = []
+cers = []
+
+print("예측 결과:")
+for wav_path, label in file_list:
+    try:
+        # 오디오 로딩 및 전처리
+        audio = whisper.load_audio(wav_path)
+        audio = whisper.pad_or_trim(audio)
+        mel = whisper.log_mel_spectrogram(audio).to(device)
+
+
+        options = whisper.DecodingOptions(
+            language="ko",
+            without_timestamps=True,
+            temperature=0.0
+        )
+
+
+        result = whisper.decode(model, mel, options)
+
+        # 정답과 예측 결과 정제
+        ref_raw = label.strip()
+        hyp_raw = result.text.strip()
+
+        ref = clean_text(ref_raw)
+        hyp = clean_text(hyp_raw)
+        hyp = truncate_by_ref_length(hyp, ref)
+
+        # 결과 저장
+        refs.append(ref)
+        hyps.append(hyp)
+
+        # CER 계산
+        cer_val = cer(ref, hyp)
+        cers.append(cer_val)
+
+        # 출력
+        print(f"원본 : {ref}")
+        print(f"예측 : {hyp}")
+        print(f"CER: {cer_val:.4f}")
+        print("-" * 50)
+
+    except Exception as e:
+        print(f"오류 (파일: {wav_path}):", e)
+
+# 전체 평균 CER 출력
+overall_cer = sum(cers) / len(cers) if cers else 0.0
+print(f"\n📊 최종 평균 CER (Character Error Rate): {overall_cer:.4f}")
+
+"""# 테스트 결과 #
+
+
+🗣️ 0506.pt(validX) :음성 인식 결과:  여름 내면 또 어떤 관찰가 많았냐 하면은 물료리 아가지고
+
+🗣️ 0521_2.pt(valid 추가) :음성 인식 결과:  여름 되냐 또 어떤 반짝아 많았냐 하면 물놀이 하가지고.
+
+🗣️0521_3(seed 추가) : 여러분들은 또 어떤 환자가 많느냐 하면은 물놀이 가 가지고
+
+
+"/content/drive/MyDrive/인지응팀플/0507.pt" :  여름 내면 또 어떤 관찰가 많았냐 하면은 물료리 아가지고
+
+
+0522_validation.pt :
+🗣️ 음성 인식 결과:  가방기를 제대로 된다 판기를 먹을 수 있다고 생각하면서. [밥 한끼를 제대로 된 밥 한끼를 먹을 수 있다고 생각하면서]
+
+0522_validation.pt(10epochs 학습 후) :
+🗣️ 음성 인식 결과:  밥 한끼를 제대로 된 밥 한 줄을 먹을 수 있다고 생각하면서.
+
+##0601.pt
+ 가방기를 제대로 된과 판기를 먹을 수 있다고 생각하면서
+🗣️ 음성 인식 결과:  여러분도 어떤 환자가 많느냐 하면은 물료리 가 가지고
+
+
+##0602.pt
+일본 회사들이 삼성에서 그 반도체를 만드는 기계를 관리해 주더라고
+🗣️ 음성 인식 결과:  일본 해산들이 삼성해서 그 반도 체를 만드는 기계를 관리해 주더라고요
+##0604.pt
+🗣️ 음성 인식 결과:  이럴 해서들이 삼성에서 그 반도체를 만드는 기계를 관리해주��라고
+##0604_random.pt
+🗣️ 음성 인식 결과:  일본 회사들이 삼성에서 그 반도 체를 만드는 기계를 관리해 주더라고요.
+"""
+
