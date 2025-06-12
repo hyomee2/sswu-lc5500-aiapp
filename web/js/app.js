@@ -1,74 +1,64 @@
-const recordBtn = document.getElementById("recordBtn");
-const statusText = document.getElementById("status");
-const resultText = document.getElementById("resultText");
-const canvas = document.getElementById("visualizer");
-const ctx = canvas ? canvas.getContext("2d") : null;
-
+// js/app.js
 let mediaRecorder;
 let audioChunks = [];
 let isRecording = false;
-let animationId;
 
-// ripple 애니메이션
-function createRipple(event) {
-  const button = event.currentTarget;
-  const ripple = document.createElement("span");
-  ripple.className = "ripple";
-  button.appendChild(ripple);
+const recordBtn = document.getElementById("recordBtn");
+const status = document.getElementById("status");
+const resultText = document.getElementById("resultText");
 
-  const rect = button.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
-  ripple.style.left = x + "px";
-  ripple.style.top = y + "px";
-
-  ripple.addEventListener("animationend", () => ripple.remove());
-}
-
-recordBtn.onclick = async (event) => {
-  createRipple(event);
-
+recordBtn.addEventListener("click", async () => {
   if (!isRecording) {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
+    // 녹음 시작
+    audioChunks = [];
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
 
-      mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+    mediaRecorder.ondataavailable = (e) => {
+      audioChunks.push(e.data);
+    };
 
-      mediaRecorder.onstop = async () => {
-        recordBtn.classList.remove("listening");
-        const blob = new Blob(audioChunks, { type: "audio/wav" });
-        const formData = new FormData();
-        formData.append("audio", blob, "input.wav");
+    mediaRecorder.onstop = async () => {
+      status.textContent = "🔁 처리 중...";
+      const blob = new Blob(audioChunks, { type: "audio/wav" });
+      const formData = new FormData();
+      formData.append("audio", blob, "input.wav");
 
-        statusText.innerText = "⏳";
+      try {
+        const res = await fetch("/api/transcribe", {
+          method: "POST",
+          body: formData,
+        });
 
-        try {
-          const response = await fetch("/api/transcribe", {
-            method: "POST",
-            body: formData,
-          });
+        const data = await res.json();
 
-          const data = await response.json();
-          resultText.innerText = data.text || "텍스트 변환 실패";
-          statusText.innerText = "완료";
-        } catch (err) {
-          statusText.innerText = "서버 응답 실패";
+        if (data.error) {
+          resultText.textContent = `❌ 오류: ${data.error}`;
+        } else {
+          resultText.textContent = `${data.text}`;
         }
 
-        isRecording = false;
-      };
+        status.textContent = "✅ 처리 완료!";
+      } catch (err) {
+        console.error(err);
+        resultText.textContent = "❌ 네트워크 오류";
+        status.textContent = "⚠️ 오류 발생";
+      }
+    };
 
-      mediaRecorder.start();
-      isRecording = true;
-      recordBtn.classList.add("listening");
-      statusText.innerText = "녹음 중...";
-    } catch (err) {
-      alert("마이크 권한을 허용해주세요.");
-    }
+    mediaRecorder.start();
+    status.textContent = "🎙️ 녹음 중... 다시 누르면 종료";
+    recordBtn.classList.add("recording");
+    isRecording = true;
+
+    // 정지할 때 스트림 참조를 위해 저장
+    recordBtn.streamRef = stream;
   } else {
+    // 녹음 정지
     mediaRecorder.stop();
-    statusText.innerText = "녹음 중지";
+    recordBtn.streamRef.getTracks().forEach(track => track.stop());
+    status.textContent = "⏹️ 녹음 종료됨";
+    recordBtn.classList.remove("recording");
+    isRecording = false;
   }
-};
+});
